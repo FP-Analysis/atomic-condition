@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+ARG DEBIAN_FRONTED=noninteractive
+
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
 RUN apt-get install -y \
