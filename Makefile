@@ -21,16 +21,6 @@ ifeq ($(OS_NAME), Darwin)
 	LLVMLDFLAGS+=-Wl,-flat_namespace -Wl,-undefined -Wl,suppress
 endif
 
-GREEN=$(shell tput setaf 2)
-NOCOLOR=$(shell tput sgr0)
-
-
-define MSG
-	@tput setaf 2
-	@echo [DONE]$1
-	@tput sgr0
-endef
-
 DEPS = src/fpUtil.h src/communicator.h src/opcode.h
 
 .PHONY: clean handler util target solver
@@ -39,14 +29,12 @@ all: handler util target
 
 # The handler start
 handler: build/handlers.o
-	$(call MSG, "The Operation Handler Compiled (but not linked): $<")
 build/handlers.o: src/handlers.cpp $(DEPS)
 	@mkdir -p build
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 # The handler finish
 
 util: build/fpUtil.o
-	$(call MSG, "The FpUtil Compiled (but not linked): $<")
 build/fpUtil.o: src/fpUtil.cpp src/fpUtil.h
 	@mkdir -p build
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
@@ -54,7 +42,6 @@ build/fpUtil.o: src/fpUtil.cpp src/fpUtil.h
 # Compile the target under analysis start.
 targetObjs = build/targetExample.o
 target: build/all_target.a
-	$(call MSG, "The Target Compiled: $^")
 build/all_target.a: $(targetObjs)
 	ar crv $@ $(targetObjs)
 build/targetExample.o: src/targetExample.c lib/libPassModule.so
@@ -66,7 +53,6 @@ build/targetExample.o: src/targetExample.c lib/libPassModule.so
 
 # Generate GSL Solver
 solver: bin/gslSolver.out
-	$(call MSG, "The GSL Solver Binary: $^")
 bin/gslSolver.out: build/gslSolver.o build/fpUtil.o build/handlers.o build/all_target.a
 	@mkdir -p bin
 	$(LD) -o $@ $^ $(GSLLDFLAGS)

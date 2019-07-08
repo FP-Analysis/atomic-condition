@@ -1,6 +1,5 @@
 FROM ubuntu:18.04
-
-ARG DEBIAN_FRONTED=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 

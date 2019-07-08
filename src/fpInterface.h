@@ -7,8 +7,7 @@
 #include "target.h"
 
 const std::vector<std::function<double(double)>> simpleFuncList = {
-    cos_icse15_unstable,
-    gsl_sf_legendre_P3_popl19_unstable,
+    foo,
 };
 
 const std::vector<std::function<int(double, gsl_sf_result*)>> GSLFuncList = {

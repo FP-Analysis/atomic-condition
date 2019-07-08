@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# clang-3.9 -DHAVE_CONFIG_H -I. -I.. -S -emit-llvm -g -o airy.ll airy.c 
-# opt-3.9 -S -load /home/mirror/Workspace/llvm-playground/lib/libPassModule.so -funcpass -o airy_i.ll airy.ll
-# clang-3.9 -DHAVE_CONFIG_H -fPIC -DPIC -c -o .libs/airy.o airy_i.ll
-# clang-3.9 -DHAVE_CONFIG_H -c -o airy.o airy_i.ll
-
 LLVM_PROJECT_PATH=/atom
 GSL_PREFIX=/atom/gslbuild
 
