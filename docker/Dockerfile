@@ -1,8 +1,9 @@
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y \
-  --no-install-recommends \
-  apt-utils \
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+
+RUN apt-get install -y \
+  ca-certificates \
   git \
   build-essential \
   clang-3.9 \
