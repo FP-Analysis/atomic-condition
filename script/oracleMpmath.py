@@ -71,7 +71,8 @@ def f14(x):
 def f15(x):
     # bessel_I1_scaled
     scale = mpmath.exp(-abs(x))
-    y = mpmath.besseli(1,x)
+    y = mpmath.besseli(1,x) * scale
+    return y
 def f16(x):
     # bessel_K0
     return mpmath.besselk(0,x)
@@ -564,7 +565,6 @@ class OutputParser:
         print("------------------------")
         info = self.data[index]
         print("Function Index:", index)
-        print("Execution Time:", info['time'])
         inputinfo = info['input_list']
         relList = sorted(inputinfo, key=lambda x: x['relative_err'], reverse=True)
         print("Max Relative Error:")
@@ -573,27 +573,11 @@ class OutputParser:
             print("  Output:", format(float(item['output']), '.15e'))
             print("  Oracle:", format(float(item['oracle']), '.15e'))
             print("        Relative Error:", format(float(item['relative_err']), '.5e'))
-
-    # def writeToJson(self):
-    #     tempData = self.data
-    #     needConvert = set(['input', 'output', 'oracle', 'relative_err', 'ulp_err', 'condition_to_end'])
-    #     for func_index in tempData:
-    #         for i in range(len(tempData[func_index]['input_list'])):
-    #             for key in tempData[func_index]['input_list'][i]:
-    #                 if key in needConvert:
-    #                     tempData[func_index]['input_list'][i][key] = float(tempData[func_index]['input_list'][i][key])
-    #     # This encoder setting not works with Python3.6
-    #     # https://stackoverflow.com/questions/32521823/json-encoder-float-repr-changed-but-no-effect
-    #     json.encoder.FLOAT_REPR=lambda x: format(x, '.15e')
-    #     with io.open(self.writeToFile, 'w') as f:
-    #         f.write(json.dumps(tempData, sort_keys=True, indent=2))
-
-
+        print("------------------------")
 
 def main():
     op = OutputParser()
     op.readAndCalculate()
-    # op.writeToJson()
 
 
 if __name__ == '__main__':

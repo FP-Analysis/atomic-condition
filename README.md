@@ -37,6 +37,13 @@ make
 bin/gslSolver.out gsl <function_index>
 ```
 
+#### Compute Relative Error (Only support GSL functions for now)
+Using the oracle from `mpmath` to compute the relative error:
+```
+make
+bin/gslSolver.out gsl <function_index> && python3 script/oracleMpmath.py
+```
+
 ## GSL Function List and mpmath Support
 | GSL Function Name           | Index | mpmath  support? |
 |-----------------------------|-------|------------------|

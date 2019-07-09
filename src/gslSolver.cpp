@@ -469,17 +469,33 @@ int main(int argc, char *argv[]) {
         int index = 0;
 	if (argc > 2)
 	    index = atoi(argv[2]);
+	if (index >= simpleFuncList.size()) {
+	    std::cout << "Invalid index in simpleFuncList\n";
+	    return 0;
+	}
         funcPtr.reset(new SimpleFunction(index));
         es.run(funcPtr, index);
     }
     else if (argc > 2 && strcmp(argv[1], "gsl") == 0) {
-	int index = atoi(argv[2]);
-        funcPtr.reset(new GSLFunction(index));
-        es.run(funcPtr, index);
+	if (!strcmp(argv[2],"all")) {
+	    for (int i = 0; i < GSLFuncList.size(); i++) {
+                funcPtr.reset(new GSLFunction(i));
+		es.run(funcPtr, i);
+	    }
+	}
+	else {
+	    int index = atoi(argv[2]);
+	    if (index >= GSLFuncList.size()) {
+		std::cout << "Invalid index in GSLFuncList.\n";
+		return 0;
+	    }
+            funcPtr.reset(new GSLFunction(index));
+            es.run(funcPtr, index);
+	}
     }
     else {
-        std::cout << "Wrong argument." << std::endl;
-	std::cout << "Example: \n\tbin/gslSolver.out gsl 73\n\tor\n\tbin/gslSolver.out example\n";
+        std::cout << "Invalid argument." << std::endl;
+	std::cout << "Valid Example: \n\tbin/gslSolver.out gsl 73\n\tor\n\tbin/gslSolver.out example\n";
     }
 
     return 0;
