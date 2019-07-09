@@ -6,9 +6,9 @@ Clone this repo to your local workspace:
 $ git clone https://github.com/FP-Analysis/atomic-condition.git
 ```
 
-The `docker` folder contains a Dockerfile that can be used to build our implementation.
+The `docker` folder contains a Dockerfile that can be used to build our implementation. If an error about permission denied occurs, try to run docker in root `sudo docker ...`.
 ```
-$ cd /atomic-condition/docker
+$ cd atomic-condition/docker
 $ docker build -t atomic .
 ```
 It may takes a few minutes for installing necessary packages and compiling the whole GSL Library.

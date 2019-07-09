@@ -1,12 +1,12 @@
 #include <math.h>
 
 double foo(double x) {
-    // This function calculate LegendreP3:
-    // See details at: http://mathworld.wolfram.com/LegendrePolynomial.html
+    // This function calculate the motivation example:
+    // y = (1-cos(x))/(x^2)
+    // See details at: https://www.wolframalpha.com/input/?i=(1-cos(x))%2F(x%5E2)
 
-    // It triggers significant error near x->0.7745967,
-    // which is about the sqrt(0.6);
-    double val = 0.5 * x * (5.0 * x * x - 3.0);
+    // It triggers significant error when x->0, where y should be ->0.5.
+    double val = (1-cos(x))/(x*x);
     return val;
 }
 
