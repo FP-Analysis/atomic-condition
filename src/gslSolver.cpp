@@ -103,11 +103,8 @@ public:
     double getTopInputConditionToEnd() const { return topInputConditionToEnd; }
 
     void pushInputFitness(double input, double fitness) {
-        // Ignore nan and inf here.
         if (!std::isfinite(fitness))
             return;
-        // Push when not fill k,
-        // or larger than heap top.
         if (topInputsRandom.size() < recordSize)
         {
             pushHeap(input, fitness);
@@ -134,10 +131,6 @@ public:
         std::cout.precision(16);
         std::cout << "    Largest's input:  " << std::setw(25) << std::scientific << topInputsRandom[0].input << '\n';
         std::cout << "    Largest's output: " << std::setw(25) << std::scientific << funcPtr->callAndGetResult(topInputsRandom[0].input) << '\n';
-
-        // for (int i = 0; i < inputSize && i < 100; i++) {
-        //     printf("***%.5e %.5e\n", topInputsRandom[i].input, topInputsRandom[i].fitness);
-        // }
 
         std::make_heap(topInputsRandom.begin(), topInputsRandom.end(), pairGreater);
     }
@@ -271,11 +264,6 @@ private:
 
                 InstructionInfo &curInst = instMap[info.instID];
                 curInst.pushInputFitness(x, fit);
-                // Record distribution for every fitness is costly.
-                // We only maintain 1/10 here.
-                // if (i % 10 == 0) {
-                //     curInst.pushFitnessDistribution(fit);
-                // }
             }
         }
         std::cout << "\n1. Random Search Done.\n";
@@ -362,7 +350,7 @@ private:
         int status;
         gsl_sf_result res;
 
-        // std::vector<InputFitnessPair> inputsWithCondToEnd;
+        std::vector<InputFitnessPair> inputsWithCountToEnd;
         // The prior score of an input is calculated from
         // the correspounding instruction to end.
         for (auto &kv : instMap) {
@@ -408,18 +396,18 @@ private:
             curInst.setTopInputCountToEnd(countToEnd);
             curInst.setTopInputConditionToEnd(logConditionToEnd);
 
-            // inputsWithCondToEnd.push_back(InputFitnessPair(curInput, logConditionToEnd));
+            inputsWithCountToEnd.push_back(InputFitnessPair(curInput, countToEnd));
             // std::cout << curInst.getInputsRandomSize() << ' ' << curInst.getInputsEvolutionSize() << '\n';
         }
         // Prioritize based on condition to end.
-        // sort(inputsWithCondToEnd.begin(), inputsWithCondToEnd.end(), pairGreater);
+        sort(inputsWithCountToEnd.begin(), inputsWithCountToEnd.end());
 
-        // std::cout << "***********Results after Prioritize***********\n";
-        // std::cout << "Format: Input, Score\n";
-        // for (auto & i : inputsWithCondToEnd) {
-        //     std::cout << std::scientific << i.input << ' ';
-        //     std::cout << i.fitness << '\n';
-        // }
+        std::cout << "***********Results after Prioritize***********\n";
+        std::cout << "Most suspicious: \n";
+        for (auto & i : inputsWithCondToEnd) {
+            std::cout << std::scientific << i.input << '\n';
+        }
+        std::cout << "Least suspicious: \n";
     }
 
     // The evolution search info.
@@ -427,7 +415,6 @@ private:
         std::cout << "************************************************\n";
         std::cout << "Actual    Unstable Instructions Size: " << unstableInstCount << '\n';
         std::cout << "Potential Unstable Instructions Size: " << instMap.size() << '\n';
-        // std::cout << "All       Executed Instructions Size: " << comm.getInstIDSize() << '\n';
         std::cout.unsetf(std::ios_base::floatfield);
         std::cout << "Execution Time: " << elapsedTime.count() << " sec.\n";
         std::cout << "************************************************\n";
@@ -444,7 +431,6 @@ private:
         myfile << "Function Index: " << GSLFuncIndex << '\n';
         myfile << "Actual    Unstable Instructions Size: " << unstableInstCount << '\n';
         myfile << "Potential Unstable Instructions Size: " << instMap.size() << '\n';
-        // myfile << "All       Executed Instructions Size: " << comm.getInstIDSize() << '\n';
         myfile << "Execution Time: " << elapsedTime.count() << " sec.\n";
         myfile << "Format: InstID, OpCode, MaxAtomCond, Input, Output, CountToEnd, ConditionToEnd\n";
         // Write Computation Results.

@@ -20,7 +20,7 @@ const std::vector<std::function<int(double, gsl_sf_result*)>> GSLFuncList = {
     std::bind(gsl_sf_airy_Bi_deriv_e, std::placeholders::_1, GSL_PREC_DOUBLE, std::placeholders::_2),
     std::bind(gsl_sf_airy_Ai_deriv_scaled_e, std::placeholders::_1, GSL_PREC_DOUBLE, std::placeholders::_2),
     std::bind(gsl_sf_airy_Bi_deriv_scaled_e, std::placeholders::_1, GSL_PREC_DOUBLE, std::placeholders::_2),
-    // gsl_sf_bessel.h, more functions with multi inputs.
+    // gsl_sf_bessel.h
     gsl_sf_bessel_J0_e,
     gsl_sf_bessel_J1_e,
     gsl_sf_bessel_Y0_e,
@@ -47,7 +47,7 @@ const std::vector<std::function<int(double, gsl_sf_result*)>> GSLFuncList = {
     gsl_sf_bessel_k2_scaled_e,
     // gsl_sf_clausen.h
     gsl_sf_clausen_e,
-    // gsl_sf_coulomb.h, more functions with multi inputs.
+    // gsl_sf_coulomb.h
     // gsl_sf_coupling.h
     // gsl_sf_dawson.h
     gsl_sf_dawson_e,
@@ -60,8 +60,8 @@ const std::vector<std::function<int(double, gsl_sf_result*)>> GSLFuncList = {
     gsl_sf_debye_6_e,
     // gsl_sf_dilog.h
     gsl_sf_dilog_e,
-    // gsl_sf_elementary.h, more functions with multi inputs.
-    // gsl_sf_ellint.h, more functions with multi inputs.
+    // gsl_sf_elementary.h
+    // gsl_sf_ellint.h
     std::bind(gsl_sf_ellint_Kcomp_e, std::placeholders::_1, GSL_PREC_DOUBLE, std::placeholders::_2),
     std::bind(gsl_sf_ellint_Ecomp_e, std::placeholders::_1, GSL_PREC_DOUBLE, std::placeholders::_2),
     std::bind(gsl_sf_ellint_Dcomp_e, std::placeholders::_1, GSL_PREC_DOUBLE, std::placeholders::_2),
@@ -73,12 +73,12 @@ const std::vector<std::function<int(double, gsl_sf_result*)>> GSLFuncList = {
     gsl_sf_erf_Z_e,
     gsl_sf_erf_Q_e,
     gsl_sf_hazard_e,
-    // gsl_sf_exp.h, more functions with multi inputs.
+    // gsl_sf_exp.h
     gsl_sf_exp_e,
     gsl_sf_expm1_e,
     gsl_sf_exprel_e,
     gsl_sf_exprel_2_e,
-    // gsl_sf_expint.h, more functions with multi inputs.
+    // gsl_sf_expint.h
     gsl_sf_expint_E1_e,
     gsl_sf_expint_E2_e,
     gsl_sf_expint_E1_scaled_e,
@@ -91,7 +91,7 @@ const std::vector<std::function<int(double, gsl_sf_result*)>> GSLFuncList = {
     gsl_sf_Si_e,
     gsl_sf_Ci_e,
     gsl_sf_atanint_e,
-    // gsl_sf_fermi_dirac.h, more functions with multi inputs.
+    // gsl_sf_fermi_dirac.h
     gsl_sf_fermi_dirac_m1_e,
     gsl_sf_fermi_dirac_0_e,
     gsl_sf_fermi_dirac_1_e,
@@ -99,19 +99,19 @@ const std::vector<std::function<int(double, gsl_sf_result*)>> GSLFuncList = {
     gsl_sf_fermi_dirac_mhalf_e,
     gsl_sf_fermi_dirac_half_e,
     gsl_sf_fermi_dirac_3half_e,
-    // gsl_sf_gamma.h, more functions with multi inputs.
+    // gsl_sf_gamma.h
     gsl_sf_lngamma_e,
     gsl_sf_gamma_e,
     gsl_sf_gammastar_e,
     gsl_sf_gammainv_e,
-    // gsl_sf_gegenbauer.h, more functions with multi inputs.
+    // gsl_sf_gegenbauer.h
     // gsl_sf_hermite.h
     // gsl_sf_hyperg.h
-    // gsl_sf_laguerre.h, more functions with multi inputs.
+    // gsl_sf_laguerre.h
     // gsl_sf_lambert.h
     gsl_sf_lambert_W0_e,
     gsl_sf_lambert_Wm1_e,
-    // gsl_sf_legendre.h, more functions with multi inputs.
+    // gsl_sf_legendre.h
     gsl_sf_legendre_P1_e,
     gsl_sf_legendre_P2_e,
     gsl_sf_legendre_P3_e,
@@ -123,7 +123,7 @@ const std::vector<std::function<int(double, gsl_sf_result*)>> GSLFuncList = {
     gsl_sf_log_1plusx_e,
     gsl_sf_log_1plusx_mx_e,
     // gsl_sf_mathieu.h
-    // gsl_sf_pow_int.h, more functions with multi inputs.
+    // gsl_sf_pow_int.h
     // gsl_sf_psi.h
     gsl_sf_psi_e,
     gsl_sf_psi_1piy_e,
@@ -139,13 +139,13 @@ const std::vector<std::function<int(double, gsl_sf_result*)>> GSLFuncList = {
     gsl_sf_transport_3_e,
     gsl_sf_transport_4_e,
     gsl_sf_transport_5_e,
-    // gsl_sf_trig.h, more functions with multi inputs.
+    // gsl_sf_trig.h
     gsl_sf_sin_e,
     gsl_sf_cos_e,
     gsl_sf_sinc_e,
     gsl_sf_lnsinh_e,
     gsl_sf_lncosh_e,
-    // gsl_sf_zeta.h, more functions with multi inputs.
+    // gsl_sf_zeta.h
     gsl_sf_zeta_e,
     gsl_sf_zetam1_e,
     gsl_sf_eta_e
@@ -173,8 +173,6 @@ protected:
 class GSLFunction : public FloatingPointFunction {
 public:
     GSLFunction(int index) {
-        // Turnoff the default GSL error handler,
-        // which will call abort()
         gsl_set_error_handler_off();
 
         if (index < 0 || index >= GSLFuncList.size()) {
