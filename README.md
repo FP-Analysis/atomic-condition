@@ -22,21 +22,22 @@ docker run -it atomic /bin/bash
 ### Play with Small Examples
 Run on the small example `foo`, defined in `src/targetExample.c`:
 ```
+( In docker's container: /atom )
 make
 bin/gslSolver.out example
 ```
 
-If you want to play with your own function, just modify the `foo` in `src/targetExample.c`, then
+If you want to play with your own function, just modify the `foo` function in `src/targetExample.c`, then
 ```
 make
 bin/gslSolver.out example
 ```
 
-To run on more functions, define the functions in `src/targetExample.c`,
+To run on more functions, define your functions in `src/targetExample.c`,
 also changes correspondingly in `src/target.h` and `simpleFuncList` in `src/fpInterface.h`, then
 ```
 make
-bin/gslSolver.out example
+bin/gslSolver.out example <function_index>
 ```
 
 ### Run on GSL Functions
@@ -162,4 +163,3 @@ bin/gslSolver.out gsl <function_index> && python3 script/oracleMpmath.py
 | gsl_sf_zeta                 | 104   |:heavy_check_mark:|
 | gsl_sf_zetam1               | 105   |:heavy_check_mark:|
 | gsl_sf_eta                  | 106   |:heavy_check_mark:|
-
