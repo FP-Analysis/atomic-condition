@@ -3,20 +3,20 @@
 ## Setup
 Clone this repo to your local workspace:
 ```
-git clone https://github.com/FP-Analysis/atomic-condition.git
+$ git clone https://github.com/FP-Analysis/atomic-condition.git
 ```
 
 The `docker` folder contains a Dockerfile that can be used to build our implementation.
 ```
-cd /atomic-condition/docker
-docker build -t atomic .
+$ cd /atomic-condition/docker
+$ docker build -t atomic .
 ```
 It may takes a few minutes for installing necessary packages and compiling the whole GSL Library.
 
 ## Usage
 Run this docker's container with interactive mode, the working directory is at `/atom`.
 ```
-docker run -it atomic /bin/bash
+$ docker run -it atomic /bin/bash
 ```
 
 ### Play with the Motivation Example
@@ -25,8 +25,8 @@ The small example `foo` in `src/targetExample.c` computes the motivation example
 Run on the small example `foo`, defined in `src/targetExample.c`:
 ```
 ( In docker's container: /atom )
-make
-bin/gslSolver.out example
+$ make
+$ bin/gslSolver.out example
 ```
 The result shows:
 ```
@@ -58,28 +58,33 @@ We can see that there is a significant error when `x=-1.6006806510433069e-08`, t
 
 If you want to play with your own function, just modify the `foo` function in `src/targetExample.c`, then
 ```
-make
-bin/gslSolver.out example
-```
-
-To run on more functions, define your functions in `src/targetExample.c`,
-also changes correspondingly in `src/target.h` and `simpleFuncList` in `src/fpInterface.h`, then
-```
-make
-bin/gslSolver.out example <function_index>
+$ make
+$ bin/gslSolver.out example
 ```
 
 ### Run on GSL Functions
 ```
-make
-bin/gslSolver.out gsl <function_index>
+$ make
+$ bin/gslSolver.out gsl <function_index>
 ```
 
 #### Compute Relative Error (Only support GSL functions for now)
 Using the oracle from `mpmath` to compute the relative error:
 ```
-make
-bin/gslSolver.out gsl <function_index> && python3 script/oracleMpmath.py
+$ make
+$ bin/gslSolver.out gsl <function_index> && python3 script/oracleMpmath.py
+```
+
+Example: GSL function `gsl_sf_lngamma` has the index 73,
+```
+$ bin/gslSolver.out gsl 73 && python3 script/oracleMpmath.py
+...
+Function Index: 73
+Max Relative Error:
+  Input:  -2.457024738220797e+00
+  Output: 3.552713678800501e-15
+  Oracle: 4.767633887335327e-15
+        Relative Error: 2.54827e-01
 ```
 
 ## GSL Function List and mpmath Support
@@ -192,4 +197,3 @@ bin/gslSolver.out gsl <function_index> && python3 script/oracleMpmath.py
 | gsl_sf_zeta                 | 104   |:heavy_check_mark:|
 | gsl_sf_zetam1               | 105   |:heavy_check_mark:|
 | gsl_sf_eta                  | 106   |:heavy_check_mark:|
-
