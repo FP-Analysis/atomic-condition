@@ -19,13 +19,42 @@ Run this docker's container with interactive mode, the working directory is at `
 docker run -it atomic /bin/bash
 ```
 
-### Play with Small Examples
+### Play with the Motivation Example
+The small example `foo` in `src/targetExample.c` computes the motivation example in our paper: `y = (1 - cos(x)) / (x * x)`
+
 Run on the small example `foo`, defined in `src/targetExample.c`:
 ```
 ( In docker's container: /atom )
 make
 bin/gslSolver.out example
 ```
+The result shows:
+```
+...
+Most suspicious input first:
+-1.6006806510433069e-08         Output: 4.3331212264181757e-01
+1.5707963267949008e+00          Output: 4.0528473456935066e-01
+End of suspicious input list.
+...
+```
+
+Then we use `mpmath` to calculate the accurate result of this two inputs:
+```
+(In python3)
+>>> import mpmath
+>>> mpmath.mp.prec=256
+>>> def foo_h(x):
+...     x = mpmath.mpf(x)
+...     return (1-mpmath.cos(x))/(x*x)
+...
+>>> y1 = foo_h(-1.6006806510433069e-08)
+>>> print(y1)
+0.49999999999999998932425...
+>>> y2 = foo_h(1.5707963267949008e+00)
+>>> print(y2)
+0.40528473456935062536197...
+```
+We can see that there is a significant error when `x=-1.6006806510433069e-08`, the first of our reported inputs.
 
 If you want to play with your own function, just modify the `foo` function in `src/targetExample.c`, then
 ```
@@ -163,3 +192,4 @@ bin/gslSolver.out gsl <function_index> && python3 script/oracleMpmath.py
 | gsl_sf_zeta                 | 104   |:heavy_check_mark:|
 | gsl_sf_zetam1               | 105   |:heavy_check_mark:|
 | gsl_sf_eta                  | 106   |:heavy_check_mark:|
+
