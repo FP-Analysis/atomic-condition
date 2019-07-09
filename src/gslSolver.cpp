@@ -149,7 +149,7 @@ public:
     }
 
     void printBriefInfo(int funcIndex) {
-        std::cout << "Function Index: " << funcIndex << ", ";
+        std::cout << "2. Searching on Operations.\nFunction Index: " << funcIndex << ", ";
         std::cout << "Analyzing Operation: " << instID << ", OPCode: " << opcode << '\n';
         std::cout << "  Largest's input: " << std::setw(15) << std::scientific << topInputsEvolution[0].input << ", ";
         std::cout << "  Fitness: " << std::scientific << topInputsEvolution[0].fitness << '\n';
@@ -351,6 +351,7 @@ private:
         gsl_sf_result res;
 
         std::vector<InputFitnessPair> inputsWithCountToEnd;
+	std::map<double, double> io;
         // The prior score of an input is calculated from
         // the correspounding instruction to end.
         for (auto &kv : instMap) {
@@ -397,17 +398,19 @@ private:
             curInst.setTopInputConditionToEnd(logConditionToEnd);
 
             inputsWithCountToEnd.push_back(InputFitnessPair(curInput, countToEnd));
+	    io[curInput] = y;
             // std::cout << curInst.getInputsRandomSize() << ' ' << curInst.getInputsEvolutionSize() << '\n';
         }
         // Prioritize based on condition to end.
         sort(inputsWithCountToEnd.begin(), inputsWithCountToEnd.end());
 
         std::cout << "***********Results after Prioritize***********\n";
-        std::cout << "Most suspicious first: \n";
+        std::cout << "Most suspicious input first: \n";
         for (auto & i : inputsWithCountToEnd) {
-            std::cout << std::setprecision(16) << std::scientific << i.input << '\n';
+            std::cout << std::setprecision(16) << std::scientific << i.input << "\t\t";
+	    std::cout << "Output: " << io[i.input] << '\n';
         }
-        std::cout << "End of Suspicious List.\n";
+        std::cout << "End of suspicious input list.\n";
     }
 
     // The evolution search info.
@@ -463,21 +466,21 @@ int main(int argc, char *argv[]) {
     std::unique_ptr<FloatingPointFunction> funcPtr;
 
     if (argc == 1 || (argc > 1 && strcmp(argv[1], "example") == 0)) {
-        for (int i = 0; i < simpleFuncList.size(); i++) {
-            funcPtr.reset(new SimpleFunction(i));
-            es.run(funcPtr, i);
-        }
+        int index = 0;
+	if (argc > 2)
+	    index = atoi(argv[2]);
+        funcPtr.reset(new SimpleFunction(index));
+        es.run(funcPtr, index);
     }
-    else if (argc > 1 && strcmp(argv[1], "gsl") == 0) {
-        for (int i = 0; i < GSLFuncList.size(); i++) {
-            funcPtr.reset(new GSLFunction(i));
-            es.run(funcPtr, i);
-        }
+    else if (argc > 2 && strcmp(argv[1], "gsl") == 0) {
+	int index = atoi(argv[2]);
+        funcPtr.reset(new GSLFunction(index));
+        es.run(funcPtr, index);
     }
     else {
         std::cout << "Wrong argument." << std::endl;
+	std::cout << "Example: \n\tbin/gslSolver.out gsl 73\n\tor\n\tbin/gslSolver.out example\n";
     }
 
     return 0;
 }
-
