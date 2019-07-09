@@ -3,12 +3,16 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
-RUN apt-get install -y \
+RUN apt-get install -y --no-install-recommends \
   ca-certificates \
   git \
   build-essential \
   clang-3.9 \
-  llvm-3.9
+  llvm-3.9 \
+  python3 \
+  python3-pip
+
+RUN pip3 install mpmath
 
 RUN git clone https://github.com/FP-Analysis/atomic-condition.git atom && \
   cd atom
