@@ -25,7 +25,8 @@ DEPS = src/fpUtil.h src/communicator.h src/opcode.h
 
 .PHONY: clean handler util target solver
 
-all: handler util target
+all: solver
+prep: handler util target
 
 # The handler start
 handler: build/handlers.o

@@ -6,6 +6,7 @@
 #include <ctime>
 #include <cmath>
 #include <cfloat>
+#include <cstring>
 #include <unordered_map>
 #include <map>
 #include <vector>
@@ -468,31 +469,28 @@ private:
     }
 };
 
-int main() {
+int main(int argc, char *argv[]) {
     // // Init communicator.
     // Communicator &comm = Communicator::getInstance();
 
     EvoSolver es;
     std::unique_ptr<FloatingPointFunction> funcPtr;
 
-    for (int i = 0; i < GSLFuncList.size(); i++) {
-        funcPtr.reset(new GSLFunction(i));
-        es.run(funcPtr, i);
+    if (argc == 1 || (argc > 1 && strcmp(argv[1], "example") == 0)) {
+        for (int i = 0; i < simpleFuncList.size(); i++) {
+            funcPtr.reset(new SimpleFunction(i));
+            es.run(funcPtr, i);
+        }
     }
-
-    // // Sanity check
-    // // Random pick 5 from no significant error.
-    // std::vector<int> sanityIndex = {60, 76, 48, 42, 85};
-    // // Reset the params
-    // es.setRandomIteration(1000 * 100000);
-    // es.setEvoIteration(1000 * 100);
-    // for (int index : sanityIndex) {
-    //     funcPtr.reset(new GSLFunction(index));
-    //     es.run(funcPtr, index);
-    // }
-
-    // funcPtr.reset(new SimpleFunction(1));
-    // es.run(funcPtr, 1);
+    else if (argc > 1 && strcmp(argv[1], "gsl") == 0) {
+        for (int i = 0; i < GSLFuncList.size(); i++) {
+            funcPtr.reset(new GSLFunction(i));
+            es.run(funcPtr, i);
+        }
+    }
+    else {
+        std::cout << "Wrong argument." << std::endl;
+    }
 
     return 0;
 }

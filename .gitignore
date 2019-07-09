@@ -1,3 +1,6 @@
 data/
 build/
 bin/
+gsl-2.5/
+gslbuild/
+*.out

@@ -15,7 +15,7 @@ RUN git clone https://github.com/FP-Analysis/atomic-condition.git atom && \
 
 # Build necessary objects.
 WORKDIR /atom
-RUN make
+RUN make prep
 RUN tar xf gsl-2.5.tar.gz
 
 # Build GSL
@@ -28,6 +28,5 @@ RUN ./compile-gsl-sf.sh
 
 # Build Solver.
 WORKDIR /atom
-RUN make solver
-
+RUN make
 
