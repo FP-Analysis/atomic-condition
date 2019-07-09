@@ -403,11 +403,11 @@ private:
         sort(inputsWithCountToEnd.begin(), inputsWithCountToEnd.end());
 
         std::cout << "***********Results after Prioritize***********\n";
-        std::cout << "Most suspicious: \n";
-        for (auto & i : inputsWithCondToEnd) {
-            std::cout << std::scientific << i.input << '\n';
+        std::cout << "Most suspicious first: \n";
+        for (auto & i : inputsWithCountToEnd) {
+            std::cout << std::setprecision(16) << std::scientific << i.input << '\n';
         }
-        std::cout << "Least suspicious: \n";
+        std::cout << "End of Suspicious List.\n";
     }
 
     // The evolution search info.
