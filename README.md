@@ -1,17 +1,25 @@
 # Detecting Floating-Point Errors via Atomic Conditions
 
 ## Setup
+Clone this repo to your local workspace:
+```
+git clone https://github.com/FP-Analysis/atomic-condition.git
+```
+
 The `docker` folder contains a Dockerfile that can be used to build our implementation.
 ```
+cd /atomic-condition/docker
 docker build -t atomic .
-docker run -it atomic /bin/bash
 ```
-It may takes a few minutes for installing the necessary packages and compiling the whole GSL Library.
+It may takes a few minutes for installing necessary packages and compiling the whole GSL Library.
 
 ## Usage
-After entering the interactive container, the working directory is at `/atom`.
+Run this docker's container with interactive mode, the working directory is at `/atom`.
+```
+docker run -it atomic /bin/bash
+```
 
-### Play with Small examples
+### Play with Small Examples
 Run on the small example `foo`, defined in `src/targetExample.c`:
 ```
 make
