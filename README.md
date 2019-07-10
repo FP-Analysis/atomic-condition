@@ -1,6 +1,8 @@
 # Detecting Floating-Point Errors via Atomic Conditions
 
 ## Setup
+Install the [docker](https://www.docker.com/). Here are some guides for install [docker for Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/) and [docker for MacOS](https://docs.docker.com/docker-for-mac/install/)
+
 Clone this repo to your local workspace:
 ```
 $ git clone https://github.com/FP-Analysis/atomic-condition.git
@@ -11,7 +13,7 @@ The `docker` folder contains a Dockerfile that can be used to build our implemen
 $ cd atomic-condition/docker
 $ docker build -t atomic .
 ```
-It may takes a few minutes for installing necessary packages and compiling the whole GSL Library.
+It may takes a few minutes (5 minutes approx) for installing necessary packages and compiling the whole GSL Library.
 
 ## Usage
 Run this docker's container with interactive mode, the working directory is at `/atom`.

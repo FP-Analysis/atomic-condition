@@ -32,7 +32,6 @@ RUN ln -s /atom/misc/compile-gsl-sf.sh /atom/gsl-2.5/specfunc
 WORKDIR /atom/gsl-2.5/specfunc
 RUN ./compile-gsl-sf.sh
 
-# Build Solver.
+# Ready for building solver.
 WORKDIR /atom
-RUN make
 
