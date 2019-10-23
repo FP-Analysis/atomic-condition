@@ -89,6 +89,27 @@ Max Relative Error:
         Relative Error: 2.54827e-01
 ```
 
+### Reproduce the Results in Paper
+#### Getting the relative errors of GSL functions (Table 4 and Table 5)
+You can check GSL functions one by one as mentioned in above section.
+You can also check all of the results in single run with:
+```
+$ make
+$ bin/gslSolver.out gsl all
+$ python3 script/oracleMpmath.py
+```
+
+#### Getting the statistics of the relative errors (Figure 3) and the ranking results (Figure 4)
+```
+(If you have already run these 3 commands, you don't need to run them again)
+$ make
+$ bin/gslSolver.out gsl all
+$ python3 script/oracleMpmath.py
+
+(Please run this to get the reproduce results)
+$ python3 script/reproduce.py
+```
+
 ## GSL Function List and mpmath Support
 | GSL Function Name           | Index | mpmath  support? |
 |-----------------------------|-------|------------------|
