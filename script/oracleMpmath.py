@@ -461,7 +461,7 @@ funcDict = {
 class GetOracle:
     def __init__(self):
         # Set mpmath precision
-        mpmath.mp.prec=512
+        mpmath.mp.prec=128
     def getOracleValue(self, funcIndex, inputX):
         funcIndex = int(funcIndex)
         # print("Func: ", funcIndex, "Input: ", inputX)
@@ -575,9 +575,24 @@ class OutputParser:
             print("        Relative Error:", format(float(item['relative_err']), '.5e'))
         print("------------------------")
 
+    def writeToJson(self):
+        tempData = self.data
+        needConvert = set(['input', 'output', 'oracle', 'relative_err', 'ulp_err', 'condition_to_end'])
+        for func_index in tempData:
+            for i in range(len(tempData[func_index]['input_list'])):
+                for key in tempData[func_index]['input_list'][i]:
+                    if key in needConvert:
+                        tempData[func_index]['input_list'][i][key] = float(tempData[func_index]['input_list'][i][key])
+        # This encoder setting not works with Python3.6
+        # https://stackoverflow.com/questions/32521823/json-encoder-float-repr-changed-but-no-effect
+        json.encoder.FLOAT_REPR=lambda x: format(x, '.15e')
+        with io.open(self.writeToFile, 'w') as f:
+            f.write(json.dumps(tempData, sort_keys=True, indent=2))
+
 def main():
     op = OutputParser()
     op.readAndCalculate()
+    op.writeToJson()
 
 
 if __name__ == '__main__':
