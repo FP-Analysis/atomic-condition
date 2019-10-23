@@ -106,7 +106,7 @@ $ make
 $ bin/gslSolver.out gsl all
 $ python3 script/oracleMpmath.py
 
-(Please run this to get the reproduce results)
+(Please do not insert other commands between this one and the above 3 ones, otherwise you need to run them once again to get the necessary intermediate results.)
 $ python3 script/reproduce.py
 ```
 
