@@ -110,6 +110,16 @@ $ python3 script/oracleMpmath.py
 $ python3 script/reproduce.py
 ```
 
+#### Data sources for LSGA and DEMC
+The data of LSGA's running time are collected from the [LSGA paper][1], which claims (the running time)
+
+> ... are approximately equal to 60 seconds.
+
+The data of DEMC's running time are collected from the [DEMC's data repository][2].
+
+[1]: https://dl.acm.org/citation.cfm?id=2818820
+[2]: https://github.com/yixin-09/AutoRNP/tree/master/paper_data/testing_results/DEMC
+
 ## GSL Function List and mpmath Support
 | GSL Function Name           | Index | mpmath  support? |
 |-----------------------------|-------|------------------|
